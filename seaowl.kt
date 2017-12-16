@@ -5,29 +5,29 @@ fun decrypt(encrypted: IntArray, key: IntArray): IntArray {
     val cstate = arrayOf(0x48, 0x74, 0x65, 0x6D, 0x70, 0x39, 0x39, 0x65)
     val shuffle = arrayOf(2, 4, 0, 7, 1, 6, 5, 3)
 
-    val phase1 = IntArray(8, { _ -> 0 })
+    val phase1 = IntArray(8)
 
     shuffle.forEachIndexed { index, value -> phase1[value] = encrypted[index] }
 
-    val phase2 = IntArray(8, { _ -> 0 })
+    val phase2 = IntArray(8)
 
     for (i in 0..7) {
         phase2[i] = phase1[i] xor key[i]
     }
 
-    val phase3 = IntArray(8, { _ -> 0 })
+    val phase3 = IntArray(8)
 
     for (i in 0..7) {
         phase3[i] = ((phase2[i] ushr 3) or (phase2[(i - 1 + 8) % 8] shl 5)) and 0xFF
     }
 
-    val phase4 = IntArray(8, { _ -> 0 })
+    val phase4 = IntArray(8)
 
     for (i in 0..7) {
         phase4[i] = ((cstate[i] ushr 4) or (cstate[i] shl 4)) and 0xFF
     }
 
-    val phase5 = IntArray(8, { _ -> 0 })
+    val phase5 = IntArray(8)
 
     for (i in 0..7) {
         phase5[i] = (0x100 + phase3[i] - phase4[i]) and 0xFF
