@@ -1,2 +1,6 @@
-cmake-build-debug
+.gradle
+build
+
 .idea
+*.iml
+*.ipr
