@@ -2,6 +2,7 @@ import kotlinx.cinterop.ByteVar
 import kotlinx.cinterop.CPointer
 import kotlinx.cinterop.refTo
 import platform.posix.*
+import mqtt.*
 
 fun decrypt(encrypted: IntArray, key: IntArray): IntArray {
 	val cstate = arrayOf(0x48, 0x74, 0x65, 0x6D, 0x70, 0x39, 0x39, 0x65)
@@ -64,7 +65,11 @@ fun main(args: Array<String>) {
 				val co2 = values[0x50]!!
 				val temp = values[0x42]!! / 16.0 - 273.15
 
+				// VW-style CO2 emission check
 				if (co2 in 0..5000) {
+					val client: MQTTClient
+					val connectionOptions: MQTTClient_connectOptions
+
 					println("CO2: ${co2}, TEMP: ${temp}")
 				}
 			}

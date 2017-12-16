@@ -14,8 +14,19 @@ buildscript {
 apply plugin: 'konan'
 
 konanArtifacts {
+	// https://github.com/eclipse/paho.mqtt.c
+	interop('mqtt') {
+		target('linux') {
+			includeDirs '/usr/local/include'
+		}
+	}
+
 	program('seaowl') {
 		enableOptimizations true
+
+		libraries {
+			artifact 'mqtt'
+		}
 	}
 }
 
