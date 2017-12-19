@@ -2,14 +2,12 @@ import org.jetbrains.kotlin.gradle.plugin.KonanArtifactContainer
 
 buildscript {
 	repositories {
-		mavenCentral()
-		maven {
-			url = uri("https://dl.bintray.com/jetbrains/kotlin-native-dependencies")
-		}
+		jcenter()
+		maven("https://dl.bintray.com/jetbrains/kotlin-native-dependencies")
 	}
 
 	dependencies {
-		classpath("org.jetbrains.kotlin:kotlin-native-gradle-plugin:+")
+		classpath("org.jetbrains.kotlin:kotlin-native-gradle-plugin:0.5")
 	}
 }
 
@@ -35,6 +33,6 @@ configure<KonanArtifactContainer> {
 }
 
 task<Wrapper>("wrapper") {
-	gradleVersion = "4.1"
+	gradleVersion = "4.4"
 	distributionType = Wrapper.DistributionType.ALL
 }
