@@ -4,3 +4,6 @@ build
 .idea
 *.iml
 *.ipr
+
+dashboard/node_modules
+dashboard/dist
