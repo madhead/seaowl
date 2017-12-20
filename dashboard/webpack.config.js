@@ -37,6 +37,10 @@ var config = {
 				test: /\.html$/,
 				exclude: /node_modules/,
 				use: 'raw-loader'
+			},
+			{
+				test: /\.(eot|svg|ttf|woff|woff2)$/,
+				loader: 'file-loader?name=fonts/[name].[ext]'
 			}
 		]
 	},
@@ -48,13 +52,6 @@ var config = {
 			minify: false
 		})
 	],
-
-	devServer: {
-		contentBase: './src',
-		noInfo: false,
-		hot: true,
-		disableHostCheck: true
-	}
 };
 
 if (appEnv === 'development') {
