@@ -1,35 +1,43 @@
 import {Component} from '@angular/core';
-import {Observable} from 'rxjs/Rx';
+import {MqttService} from 'ngx-mqtt';
 
 import seaOwlComponentTemplate from '../html/seaowl.html'
 import {COLOR_STOPS} from './config';
+import {MQTT_PPM_TOPIC} from './config';
 
 @Component({
 	selector: 'seaowl',
 	template: seaOwlComponentTemplate,
 	host: {
-		"[style.background-color]": "color('bg', this.co2)",
-		"[style.color]": "color('fg', this.co2)"
+		"[style.background-color]": "bg(this.ppm)",
+		"[style.color]": "fg(this.ppm)"
 	},
 })
 export default class SeaOwlComponent {
-	ngOnInit() {
-		this.co2 = COLOR_STOPS[0].ppm;
-		Observable
-			.timer(0, 50)
-			.subscribe(t => {
-				this.co2++;
-				if (this.co2 > COLOR_STOPS[COLOR_STOPS.length - 1].ppm + 100) {
-					this.co2 = COLOR_STOPS[0].ppm - 100
-				}
-			});
+	constructor(mqtt) {
+		this.mqtt = mqtt;
 	}
 
-	color(kind, ppm) {
+	ngOnInit() {
+		this.ppm = 0;
+		this.mqtt.observe(MQTT_PPM_TOPIC).subscribe(message => {
+			this.ppm = parseInt(message.payload.toString())
+		})
+	}
+
+	bg(ppm) {
+		return this.color(ppm, colorStop => colorStop.bg)
+	}
+
+	fg(ppm) {
+		return this.color(ppm, colorStop => colorStop.fg)
+	}
+
+	color(ppm, selector) {
 		if (ppm <= COLOR_STOPS[0].ppm) {
-			return COLOR_STOPS[0][kind].toRGB();
+			return selector(COLOR_STOPS[0]).toRGB();
 		} else if (ppm >= COLOR_STOPS[COLOR_STOPS.length - 1].ppm) {
-			return COLOR_STOPS[COLOR_STOPS.length - 1][kind].toRGB();
+			return selector(COLOR_STOPS[COLOR_STOPS.length - 1]).toRGB();
 		} else {
 			let i = 0;
 
@@ -41,10 +49,14 @@ export default class SeaOwlComponent {
 				}
 			}
 
-			return COLOR_STOPS[i - 1][kind].interpolate(
-				COLOR_STOPS[i][kind],
+			return selector(COLOR_STOPS[i - 1]).interpolate(
+				selector(COLOR_STOPS[i]),
 				(ppm - COLOR_STOPS[i - 1].ppm) / (COLOR_STOPS[i].ppm - COLOR_STOPS[i - 1].ppm)
 			).toRGB();
 		}
 	}
 }
+
+SeaOwlComponent.parameters = [
+	MqttService
+];

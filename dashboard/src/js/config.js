@@ -13,3 +13,11 @@ export const COLOR_STOPS = [
 		new Color(237, 127, 68)
 	),
 ].sort((a, b) => a.ppm - b.ppm);
+
+export const MQTT_SERVICE_OPTIONS = {
+	hostname: 'localhost',
+	port: 9001,
+	path: '/ws'
+};
+
+export const MQTT_PPM_TOPIC = 'ppm';
