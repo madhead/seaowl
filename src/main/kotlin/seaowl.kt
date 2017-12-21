@@ -1,6 +1,4 @@
-import kotlinx.cinterop.ByteVar
-import kotlinx.cinterop.CPointer
-import kotlinx.cinterop.refTo
+import kotlinx.cinterop.*
 import platform.posix.*
 import mqtt.*
 
@@ -62,15 +60,33 @@ fun main(args: Array<String>) {
 			values[k] = v
 
 			if (values.containsKey(0x50) && values.containsKey(0x42)) {
-				val co2 = values[0x50]!!
+				val ppm = values[0x50]!!
 				val temp = values[0x42]!! / 16.0 - 273.15
 
 				// VW-style CO2 emission check
-				if (co2 in 0..5000) {
-					val client: MQTTClient
-					val connectionOptions: MQTTClient_connectOptions
+				if (ppm in 0..5000) {
+					memScoped {
+						val client = alloc<MQTTClientVar>()
 
-					println("CO2: ${co2}, TEMP: ${temp}")
+						MQTTClient_create(client.ptr, "tcp://localhost:1883", "seaowl", MQTTCLIENT_PERSISTENCE_NONE, null)
+
+						val connectionOptions: CValue<MQTTClient_connectOptions> = MQTTClient_connectOptions_seed().copy {
+							keepAliveInterval = 20
+							cleansession = 1
+						}
+
+						val connection = MQTTClient_connect(client.value, connectionOptions)
+						val message: CValue<MQTTClient_message> = MQTTClient_message_seed().copy {
+							payload = ppm.toString().cstr.getPointer(memScope)
+							payloadlen = ppm.toString().cstr.size
+							qos = 1
+							retained = 0
+						}
+
+						val token = alloc<MQTTClient_deliveryTokenVar>()
+
+						MQTTClient_publishMessage(client.value, "ppm", message, token.ptr)
+					}
 				}
 			}
 		}

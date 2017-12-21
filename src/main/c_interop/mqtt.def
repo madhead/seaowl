@@ -1,2 +1,16 @@
 headers = MQTTClient.h MQTTClientPersistence.h
 linkerOpts.linux = -L/usr/local/lib -lpaho-mqtt3c
+
+---
+
+static inline MQTTClient_connectOptions MQTTClient_connectOptions_seed() {
+    MQTTClient_connectOptions result = MQTTClient_connectOptions_initializer;
+
+    return result;
+}
+
+static inline MQTTClient_message MQTTClient_message_seed() {
+    MQTTClient_message result = MQTTClient_message_initializer;
+
+    return result;
+}
