@@ -20,6 +20,11 @@ var config = {
 				}
 			},
 			{
+				test: /\.html$/,
+				exclude: /node_modules/,
+				use: 'raw-loader'
+			},
+			{
 				test: /\.less$/,
 				use: [
 					{
@@ -32,11 +37,6 @@ var config = {
 						loader: 'less-loader'
 					}
 				]
-			},
-			{
-				test: /\.html$/,
-				exclude: /node_modules/,
-				use: 'raw-loader'
 			},
 			{
 				test: /\.(eot|svg|ttf|woff|woff2)$/,
