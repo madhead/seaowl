@@ -1,7 +1,7 @@
 = seaowl
 
-seaowl is a simple Kotlin Native demo application that reads CO₂ and temperature readings from devices like [this](https://www.co2meter.com/products/co2mini-co2-indoor-air-quality-monitor).
+seaowl is a simple Kotlin Native demo application that reads CO₂ and temperature readings from devices like https://www.co2meter.com/products/co2mini-co2-indoor-air-quality-monitor[this].
 
 == Acknowledgements
 
-Many thanks to [Henryk Plötz](https://github.com/henryk) and his [Reverse-Engineering a low-cost USB CO₂ monitor](https://hackaday.io/project/5301/logs) article.
+Many thanks to https://github.com/henryk[Henryk Plötz] and his https://hackaday.io/project/5301/logs[Reverse-Engineering a low-cost USB CO₂ monitor] article.
