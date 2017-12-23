@@ -48,7 +48,6 @@ fun main(args: Array<String>) {
 	val frame = ByteArray(8)
 
 	while (true) {
-		sleep(1)
 		read(device, frame.refTo(0), 8)
 
 		val decrypted = decrypt(frame.map { it.toInt() and 0xFF }.toIntArray(), key)
@@ -76,16 +75,18 @@ fun main(args: Array<String>) {
 						}
 
 						val connection = MQTTClient_connect(client.value, connectionOptions)
-						val message: CValue<MQTTClient_message> = MQTTClient_message_seed().copy {
-							payload = ppm.toString().cstr.getPointer(memScope)
-							payloadlen = ppm.toString().cstr.size
-							qos = 1
-							retained = 0
+
+						if (MQTTCLIENT_SUCCESS == connection) {
+							val ppmString = ppm.toString().cstr
+							val message: CValue<MQTTClient_message> = MQTTClient_message_seed().copy {
+								payload = ppmString.getPointer(memScope)
+								payloadlen = ppmString.size
+								qos = 1
+								retained = 0
+							}
+
+							MQTTClient_publishMessage(client.value, "ppm", message, null)
 						}
-
-						val token = alloc<MQTTClient_deliveryTokenVar>()
-
-						MQTTClient_publishMessage(client.value, "ppm", message, token.ptr)
 					}
 				}
 			}
