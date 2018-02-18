@@ -5,11 +5,11 @@ buildscript {
 	}
 
 	dependencies {
-		classpath("org.jetbrains.kotlin:kotlin-native-gradle-plugin:0.5")
+		classpath("org.jetbrains.kotlin:kotlin-native-gradle-plugin:0.6")
 	}
 }
 
 task<Wrapper>("wrapper") {
-	gradleVersion = "4.4"
+	gradleVersion = "4.5"
 	distributionType = Wrapper.DistributionType.ALL
 }

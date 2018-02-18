@@ -7,3 +7,7 @@ build
 
 dashboard/node_modules
 dashboard/dist
+
+sensor/CMakeLists.txt
+sensor/KotlinCMakeModule
+sensor/cmake-build-debug
