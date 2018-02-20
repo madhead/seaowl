@@ -1,5 +1,7 @@
 headers = MQTTClient.h MQTTClientPersistence.h
 linkerOpts.linux = -L/usr/local/lib -lpaho-mqtt3c
+# staticLibraries = libpaho-mqtt3c-static.a
+# libraryPaths = /usr/local/lib64
 
 ---
 
