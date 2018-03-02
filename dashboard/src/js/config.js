@@ -15,9 +15,10 @@ export const COLOR_STOPS = [
 ].sort((a, b) => a.ppm - b.ppm);
 
 export const MQTT_SERVICE_OPTIONS = {
-	hostname: 'localhost',
-	port: 9001,
-	path: '/ws'
+	hostname: process.env.BROKER_HOST,
+	port: process.env.BROKER_PORT,
+	path: process.env.BROKER_PATH,
+	clientId: 'seaowl-dashboard'
 };
 
 export const MQTT_PPM_TOPIC = 'ppm';

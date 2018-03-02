@@ -1,3 +1,4 @@
+var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var CleanPlugin = require('clean-webpack-plugin');
 var appEnv = process.env.NODE_ENV || 'development';
@@ -50,6 +51,11 @@ var config = {
 			template: './src/html/index.html',
 			inject: 'body',
 			minify: false
+		}),
+		new webpack.EnvironmentPlugin({
+			BROKER_HOST: 'localhost',
+			BROKER_PORT: 9001,
+			BROKER_PATH: '/ws'
 		})
 	],
 };
