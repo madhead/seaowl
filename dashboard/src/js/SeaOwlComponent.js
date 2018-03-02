@@ -1,28 +1,36 @@
 import {Component} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
 import {MqttService} from 'ngx-mqtt';
 
 import seaOwlComponentTemplate from '../html/seaowl.html'
 import {COLOR_STOPS} from './config';
-import {MQTT_PPM_TOPIC} from './config';
 
 @Component({
 	selector: 'seaowl',
 	template: seaOwlComponentTemplate,
 	host: {
-		"[style.background-color]": "bg(this.ppm)",
-		"[style.color]": "fg(this.ppm)"
+		'[style.background-color]': 'bg(this.ppm)',
+		'[style.color]': 'fg(this.ppm)'
 	},
 })
 export default class SeaOwlComponent {
-	constructor(mqtt) {
+	constructor(mqtt, route) {
 		this.mqtt = mqtt;
-	}
-
-	ngOnInit() {
 		this.ppm = 0;
-		this.mqtt.observe(MQTT_PPM_TOPIC).subscribe(message => {
-			this.ppm = parseInt(message.payload.toString())
-		})
+		route.fragment.subscribe(fragment => {
+			let topic = (fragment || '').replace('/', '');
+
+			if (topic){
+				if (!!this.ppmSubscription) {
+					this.ppmSubscription.unsubscribe();
+				}
+
+				this.ppm = 0;
+				this.ppmSubscription = this.mqtt.observe(topic).subscribe(message => {
+					this.ppm = parseInt(message.payload.toString())
+				});
+			}
+		});
 	}
 
 	bg(ppm) {
@@ -58,5 +66,6 @@ export default class SeaOwlComponent {
 }
 
 SeaOwlComponent.parameters = [
-	MqttService
+	MqttService,
+	ActivatedRoute
 ];

@@ -20,5 +20,3 @@ export const MQTT_SERVICE_OPTIONS = {
 	path: process.env.BROKER_PATH,
 	clientId: 'seaowl-dashboard'
 };
-
-export const MQTT_PPM_TOPIC = 'ppm';

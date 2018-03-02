@@ -1,4 +1,5 @@
 import {NgModule} from '@angular/core';
+import {RouterModule} from '@angular/router';
 import {BrowserModule} from '@angular/platform-browser';
 import {MqttService} from 'ngx-mqtt';
 
@@ -11,7 +12,11 @@ export function mqttServiceFactory() {
 
 @NgModule({
 	imports: [
-		BrowserModule
+		BrowserModule,
+		RouterModule.forRoot(
+			[
+			]
+		)
 	],
 	declarations: [
 		SeaOwlComponent
