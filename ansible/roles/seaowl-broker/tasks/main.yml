@@ -1,0 +1,10 @@
+- name: 'Start broker'
+  docker_container:
+    name: seaowl-broker
+    image: madhead/seaowl-broker:1.0.0
+    ports:
+     - "1883:1883"
+     - "15672:15672"
+     - "15675:15675"
+    recreate: true
+    restart_policy: always

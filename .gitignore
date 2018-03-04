@@ -11,3 +11,5 @@ dashboard/dist
 sensor/CMakeLists.txt
 sensor/KotlinCMakeModule
 sensor/cmake-build-debug
+
+ansible/*.retry

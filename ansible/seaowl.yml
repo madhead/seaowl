@@ -1,0 +1,18 @@
+#!/usr/bin/env ansible-playbook
+
+- name: Broker
+  hosts: seaowl-broker
+  roles:
+    - role: seaowl-broker
+      become: true
+      become_user: root
+      tags:
+        - seaowl-broker
+- name: Dashboard
+  hosts: seaowl-dashboard
+  roles:
+    - role: seaowl-dashboard
+      become: true
+      become_user: root
+      tags:
+        - seaowl-dashboard
