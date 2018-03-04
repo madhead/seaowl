@@ -67,7 +67,7 @@ fun main(args: Array<String>) {
 					memScoped {
 						val client = alloc<MQTTClientVar>()
 
-						MQTTClient_create(client.ptr, "tcp://localhost:1883", "seaowl", MQTTCLIENT_PERSISTENCE_NONE, null)
+						MQTTClient_create(client.ptr, "tcp://localhost:1883", "seaowl-sensor", MQTTCLIENT_PERSISTENCE_NONE, null)
 
 						val connectionOptions: CValue<MQTTClient_connectOptions> = MQTTClient_connectOptions_seed().copy {
 							keepAliveInterval = 20
