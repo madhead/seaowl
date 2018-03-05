@@ -1,0 +1,20 @@
+- name: 'Create user'
+  user:
+    name: seaowl-dashboard
+    system: true
+- name: 'Delete dashboard directory'
+  file:
+    path: /var/www/seaowl-dashboard
+    state: absent
+- name: 'Create dashboard directory'
+  file:
+    path: /var/www/seaowl-dashboard
+    state: directory
+    owner: seaowl-dashboard
+    group: seaowl-dashboard
+- name: 'Copy dashboard files'
+  copy:
+    src: '{{ role_path }}/../../../dashboard/dist/'
+    dest: /var/www/seaowl-dashboard
+    owner: seaowl-dashboard
+    group: seaowl-dashboard

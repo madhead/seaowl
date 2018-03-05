@@ -1,0 +1,7 @@
+dependencies:
+  - role: geerlingguy.nginx
+    nginx_remove_default_vhost: true
+    nginx_vhosts:
+      - listen: '80'
+        server_name: localhost
+        root: /var/www/seaowl-dashboard
