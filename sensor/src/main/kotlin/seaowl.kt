@@ -62,6 +62,8 @@ fun main(args: Array<String>) {
 				val ppm = values[0x50]!!
 				val temp = values[0x42]!! / 16.0 - 273.15
 
+				println("PPM: $ppm, TEMP: $temp")
+
 				// VW-style CO2 emission check
 				if (ppm in 0..5000) {
 					memScoped {

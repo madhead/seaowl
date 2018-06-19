@@ -4,7 +4,7 @@ A very simple dashboard that draws CO₂ PPM readings.
 The design is heavily inspired by https://ixcitadel.com[Josan Gonzalez's] https://f1x-2.deviantart.com[artworks].
 The font is https://www.dafont.com/aldo-the-apache.font["Aldo the Apache"].
 
-== How to develop
+== How to run
 
 [source, bash]
 ----
